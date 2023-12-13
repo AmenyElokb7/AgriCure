@@ -1,0 +1,31 @@
+{
+  "project_info": {
+    "project_number": "533273523005",
+    "firebase_url": "https://esp32-app-c8fbf-default-rtdb.firebaseio.com",
+    "project_id": "esp32-app-c8fbf",
+    "storage_bucket": "esp32-app-c8fbf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533273523005:android:27b6ba63f78516931d8b54",
+        "android_client_info": {
+          "package_name": "com.example.agri_cure"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjE2YLgey7VYFcPBirSdVBM_oJwQNV_wE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+    
+  ],
+  "configuration_version": "1"
+}
