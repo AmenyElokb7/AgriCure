@@ -22,7 +22,7 @@ class _PlantMonitoringState extends State<PlantMonitoring> {
   late DatabaseReference _databaseReference;
   late int humidityValue = 0;
   late int temperatureValue = 0;
-  //late int moistureValue = 0;
+  int moistureValue = 0;
   late String moisture = "";
 
   @override
@@ -50,6 +50,9 @@ class _PlantMonitoringState extends State<PlantMonitoring> {
         moisture = snapshot.child('moisture').value.toString();
         _updatemoistureValue(moisture);
 
+        moistureValue= (snapshot.child('moisture_val').value as int?) ?? 0;
+        _updateMoistureValue(moistureValue);
+
         print("Humidity value: $humidityValue");
         print("Temperature value: $temperatureValue");
       } else {
@@ -64,6 +67,11 @@ class _PlantMonitoringState extends State<PlantMonitoring> {
     setState(() {
       humidityValue = newhumidityValue;
       print(humidityValue);
+    });
+  }
+  void _updateMoistureValue(int newMoistureeValue){
+    setState(() {
+      
     });
   }
 
@@ -103,19 +111,27 @@ class _PlantMonitoringState extends State<PlantMonitoring> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             PlantParameterCard(
-              title: 'Plant Humidity',
+              title: 'Air Humidity',
               description:
-                  'Relative percentage of water vapor present in plant',
-              value: '$humidityValue N/A % : $moisture',
+                  'Relative percentage of water vapor present in air',
+              value: '$humidityValue N/A  ',
               icon: Icons.opacity,
             ),
             SizedBox(height: 16.0),
             PlantParameterCard(
-              title: 'Plant Temperature',
+              title: 'Air Temperature',
               description:
                   'Weather parameter that measures how hot or cold the plant is',
               value: '$temperatureValue °C',
               icon: Icons.wb_sunny,
+            ),
+            SizedBox(height: 16.0),
+            PlantParameterCard(
+              title: 'Plant Humidity',
+              description:
+                  'Relative percentage of water vapor present in the plant',
+              value: "$moistureValue N/A  it's $moisture ",
+              icon: Icons.opacity,
             ),
           ],
         ),

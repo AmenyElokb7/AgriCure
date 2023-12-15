@@ -153,22 +153,6 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ],
         ),
-        leading: Container(
-          margin: EdgeInsets.all(8.0),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.grey.withOpacity(0.5),
-          ),
-          child: IconButton(
-            onPressed: () {
-              Navigator.pop(context); // Navigate back when the arrow is pressed
-            },
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.green.shade900,
-            ),
-          ),
-        ),
       ),
       body: DashChat(
         currentUser: _currentUser,

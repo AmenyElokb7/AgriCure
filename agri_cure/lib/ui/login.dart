@@ -19,7 +19,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-const String baseUrl = 'http://192.168.56.1:3000';
+
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
@@ -108,7 +108,6 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 15,
               ),
-              // Add a widget to display the message
               widget.message != null
                   ? Container(
                       padding: EdgeInsets.all(16),
@@ -265,9 +264,9 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 Future<bool> login(String username, String password) async {
-  print(Uri.parse('$baseUrl/login'));
+  print(Uri.parse('${globals.baseUrl}/login'));
   final response = await http.post(
-    Uri.parse('$baseUrl/login'),
+    Uri.parse('${globals.baseUrl}/login'),
     //withCredentials: true,
     headers: <String, String>{'Content-Type': 'application/json'},
     body: jsonEncode(

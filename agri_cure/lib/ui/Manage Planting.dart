@@ -36,12 +36,12 @@ class _ManagePlantingState extends State<ManagePlanting> {
         children: <Widget>[
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/background.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              // decoration: BoxDecoration(
+              //   image: DecorationImage(
+              //     image: AssetImage('assets/images/background.png'),
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
@@ -69,45 +69,6 @@ class _ManagePlantingState extends State<ManagePlanting> {
                                 );
                               },
                               child: Text(
-                                "Create Planting",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 300,
-                              height: 40,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(50),
-                      child: Card(
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: Image.asset(
-                                    'assets/images/viewPlanting.webp',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ViewPlanting()),
-                                );
-                              },
-                              child: Text(
                                 "View Planting",
                                 style: TextStyle(
                                   fontSize: 20,
@@ -123,6 +84,45 @@ class _ManagePlantingState extends State<ManagePlanting> {
                         ),
                       ),
                     ),
+                    // Padding(
+                    //   padding: EdgeInsets.all(50),
+                    //   child: Card(
+                    //     child: Column(
+                    //       children: <Widget>[
+                    //         Row(
+                    //           children: <Widget>[
+                    //             Expanded(
+                    //               child: Image.asset(
+                    //                 'assets/images/viewPlanting.webp',
+                    //                 fit: BoxFit.cover,
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //         GestureDetector(
+                    //           onTap: () {
+                    //             Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                   builder: (context) => ViewPlanting()),
+                    //             );
+                    //           },
+                    //           child: Text(
+                    //             "View Planting",
+                    //             style: TextStyle(
+                    //               fontSize: 20,
+                    //               color: Colors.black,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         SizedBox(
+                    //           width: 300,
+                    //           height: 40,
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

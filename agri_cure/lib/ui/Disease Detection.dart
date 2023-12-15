@@ -152,18 +152,50 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
           child: ListView(
             shrinkWrap: true,
             children: <Widget>[
-              Text(
-                "Disease: $predictionClass",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: DefaultTextStyle.of(context).style,
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'Disease: ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.red.shade900,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '$predictionClass',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Text(
-                "Treatment: $predictionTreatment",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
+              RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  style: DefaultTextStyle.of(context).style,
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'Treatment: ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.green.shade900,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '$predictionTreatment',
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -195,7 +227,7 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
       String treatment) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.56.1:3000/save-plant'),
+        Uri.parse('http://192.168.196.191:3000/save-plant'),
         body: {
           'UserUsername': UserUsername,
           'Image': image,
@@ -222,7 +254,7 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
 
     var request = http.MultipartRequest(
       'POST',
-      Uri.parse('http://192.168.56.1:8000/predict'),
+      Uri.parse('http://192.168.196.191:8000/predict'),
     );
 
     request.files.add(

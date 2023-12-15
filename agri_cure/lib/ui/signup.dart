@@ -5,6 +5,7 @@ import 'package:agri_cure/ui/values/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'globals.dart' as globals;
 
 class SignupPage extends StatefulWidget {
   @override
@@ -27,134 +28,134 @@ class _SignupPageState extends State<SignupPage> {
   }
 
   Future<void> signUp(
-  //     String username, String password, String confirmPassword) async {
-  //   final String baseUrl = 'http://192.168.56.1:3000';
+      //     String username, String password, String confirmPassword) async {
+      //   final String baseUrl = 'http://192.168.56.1:3000';
 
-  //   try {
-  //     final response = await http.post(
-  //       Uri.parse('$baseUrl/signup'),
-  //       headers: <String, String>{'Content-Type': 'application/json'},
-  //       body: jsonEncode(<String, String>{
-  //         'username': username,
-  //         'password': password,
-  //         'confirmPassword': confirmPassword,
-  //       }),
-  //     );
+      //   try {
+      //     final response = await http.post(
+      //       Uri.parse('$baseUrl/signup'),
+      //       headers: <String, String>{'Content-Type': 'application/json'},
+      //       body: jsonEncode(<String, String>{
+      //         'username': username,
+      //         'password': password,
+      //         'confirmPassword': confirmPassword,
+      //       }),
+      //     );
 
-  //     if (response.statusCode == 201) {
-  //       print('User registered successfully');
+      //     if (response.statusCode == 201) {
+      //       print('User registered successfully');
 
-  //       print('Response Body: ${response.body}');
-  //       Navigator.pushReplacement(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (_) => LoginPage(
-  //             message: 'Check your email to verify your account',
-  //             backgroundColor: Colors.green,
-  //           ),
-  //         ),
-  //       );
-  //     } else {
-  //       print(
-  //           'Registration failed. Status Code: ${response.statusCode}, Body: ${response.body}');
-  //       final Map<String, dynamic> responseData = jsonDecode(response.body);
-  //       final String errorMessage = responseData['message'] ?? 'Unknown error';
-  //       showDialog(
-  //         context: context,
-  //         builder: (BuildContext context) {
-  //           return AlertDialog(
-  //             title: Text('Signup Failed'),
-  //             content: Text(errorMessage),
-  //             actions: [
-  //               TextButton(
-  //                 onPressed: () {
-  //                   Navigator.of(context).pop();
-  //                 },
-  //                 child: Text('OK'),
-  //               ),
-  //             ],
-  //           );
-  //         },
-  //       );
-  //     }
-  //   } catch (e) {
-  //     print('Exception during signup: $e');
-  //   }
-  // }
-  String username, String password, String confirmPassword) async {
-  final String baseUrl = 'http://192.168.56.1:3000';
+      //       print('Response Body: ${response.body}');
+      //       Navigator.pushReplacement(
+      //         context,
+      //         MaterialPageRoute(
+      //           builder: (_) => LoginPage(
+      //             message: 'Check your email to verify your account',
+      //             backgroundColor: Colors.green,
+      //           ),
+      //         ),
+      //       );
+      //     } else {
+      //       print(
+      //           'Registration failed. Status Code: ${response.statusCode}, Body: ${response.body}');
+      //       final Map<String, dynamic> responseData = jsonDecode(response.body);
+      //       final String errorMessage = responseData['message'] ?? 'Unknown error';
+      //       showDialog(
+      //         context: context,
+      //         builder: (BuildContext context) {
+      //           return AlertDialog(
+      //             title: Text('Signup Failed'),
+      //             content: Text(errorMessage),
+      //             actions: [
+      //               TextButton(
+      //                 onPressed: () {
+      //                   Navigator.of(context).pop();
+      //                 },
+      //                 child: Text('OK'),
+      //               ),
+      //             ],
+      //           );
+      //         },
+      //       );
+      //     }
+      //   } catch (e) {
+      //     print('Exception during signup: $e');
+      //   }
+      // }
+      String username,
+      String password,
+      String confirmPassword) async {
+    try {
+      final response = await http.post(
+        Uri.parse('${globals.baseUrl}/signup'),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode(<String, String>{
+          'username': username,
+          'password': password,
+          'confirmPassword': confirmPassword,
+        }),
+      );
 
-  try {
-    final response = await http.post(
-      Uri.parse('$baseUrl/signup'),
-      headers: <String, String>{'Content-Type': 'application/json'},
-      body: jsonEncode(<String, String>{
-        'username': username,
-        'password': password,
-        'confirmPassword': confirmPassword,
-      }),
-    );
-
-    if (response.statusCode == 201) {
-      print('User registered successfully');
-      print('Response Body: ${response.body}');
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (_) => LoginPage(
-            message: 'Check your email to verify your account',
-            backgroundColor: Colors.green,
+      if (response.statusCode == 201) {
+        print('User registered successfully');
+        print('Response Body: ${response.body}');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (_) => LoginPage(
+              message: 'Check your email to verify your account',
+              backgroundColor: Colors.green,
+            ),
           ),
-        ),
-      );
-    } else if (response.statusCode == 400) {
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-      final String errorMessage = responseData['message'] ?? 'Unknown error';
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Signup Failed'),
-            content: Text(errorMessage),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // Handle other error cases
-      print(
-          'Registration failed. Status Code: ${response.statusCode}, Body: ${response.body}');
-      final Map<String, dynamic> responseData = jsonDecode(response.body);
-      final String errorMessage = responseData['message'] ?? 'Unknown error';
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Signup Failed'),
-            content: Text(errorMessage),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+        );
+      } else if (response.statusCode == 400) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final String errorMessage = responseData['message'] ?? 'Unknown error';
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Signup Failed'),
+              content: Text(errorMessage),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        // Handle other error cases
+        print(
+            'Registration failed. Status Code: ${response.statusCode}, Body: ${response.body}');
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+        final String errorMessage = responseData['message'] ?? 'Unknown error';
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Signup Failed'),
+              content: Text(errorMessage),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (e) {
+      print('Exception during signup: $e');
     }
-  } catch (e) {
-    print('Exception during signup: $e');
   }
-}
 
   bool isObscure = true;
   bool isConfirmPasswordObscure = true;

@@ -1,3 +1,4 @@
+import 'package:agri_cure/models/plants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -5,25 +6,22 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'globals.dart' as globals;
 
-void main() {
-  runApp(MaterialApp(
-    home: PlantDetails(),
-  ));
-}
-
 class PlantDetails extends StatefulWidget {
-  const PlantDetails({Key? key}) : super(key: key);
+  final String plantId;
+
+  const PlantDetails({Key? key, required this.plantId}) : super(key: key);
 
   @override
   State<PlantDetails> createState() => _PlantDetailsState();
 }
 
 class _PlantDetailsState extends State<PlantDetails> {
-  List<Plant> plants = [];
+  Plant? plant; // Change from List<Plant> to Plant
+
   @override
   void initState() {
     super.initState();
-    getPlantsData();
+    getPlantDetails();
   }
 
   @override
@@ -59,9 +57,9 @@ class _PlantDetailsState extends State<PlantDetails> {
       child: Card(
         child: Column(
           children: <Widget>[
-            plants.isNotEmpty && plants[0].image != null
+            plant != null && plant!.image != null
                 ? Image.file(
-                    File(plants[0].image),
+                    File(plant!.image),
                     width: 200,
                     height: 200,
                   )
@@ -74,103 +72,99 @@ class _PlantDetailsState extends State<PlantDetails> {
 
   Widget _buildPlantList() {
     return Column(
-      children: plants.map((plant) {
-        return _buildPlantCard(plant);
-      }).toList(),
+      children: plant != null ? [_buildPlantCard(plant!)] : [],
     );
   }
 
-Widget _buildPlantCard(Plant plant) {
-  return SizedBox(
-    width: 350,
-    child: Column(
-      children: <Widget>[
-        _buildCardItem("Disease ", plant.disease, Icons.warning, FontWeight.bold),
-        SizedBox(height: 16.0),
-        _buildCardItem("Treatment" , plant.treatment, Icons.healing, FontWeight.normal),
-      ],
-    ),
-  );
-}
-Widget _buildCardItem(String title, String text, IconData iconData, FontWeight fontWeight) {
-  return Card(
-    child: Padding(
-      padding: EdgeInsets.all(8.0),
+  Widget _buildPlantCard(Plant plant) {
+    return SizedBox(
+      width: 350,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Icon(
-                iconData,
-              ),
-              SizedBox(width: 5),
-              Expanded(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 5),
-          Row(
-            children: [
-             
-              Expanded(
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: fontWeight,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ],
-          ),
+        children: <Widget>[
+          _buildCardItem(
+              "Disease ", plant.disease, Icons.warning, FontWeight.bold),
+          SizedBox(height: 16.0),
+          _buildCardItem(
+              "Treatment", plant.treatment, Icons.healing, FontWeight.normal),
         ],
       ),
-    ),
-  );
-}
-
-
-
-
-
-  Future<void> getPlantsData() async {
-    try {
-      final List<Plant> fetchedPlants =
-          await fetchPlants(globals.loggedInUsername);
-      setState(() {
-        plants = fetchedPlants;
-      });
-      print("eeeeee");
-      print(plants.first.disease);
-    } catch (error) {
-      print('Error fetching plants: $error');
-    }
-  }
-
-  Future<List<Plant>> fetchPlants(String userUsername) async {
-    final response = await http.get(
-      Uri.parse('http://192.168.56.1:3000/plants/$userUsername'),
     );
+  }
 
-    if (response.statusCode == 200) {
-      final List<dynamic> jsonList = json.decode(response.body);
-      return jsonList.map((plantJson) => Plant.fromJson(plantJson)).toList();
-    } else {
-      throw Exception('Failed to load plants');
+  Widget _buildCardItem(
+      String title, String text, IconData iconData, FontWeight fontWeight) {
+    return Card(
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  iconData,
+                ),
+                SizedBox(width: 5),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 5),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: fontWeight,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> getPlantDetails() async {
+    try {
+      final Plant fetchedPlant = await fetchPlantDetails(widget.plantId);
+      setState(() {
+        plant = fetchedPlant;
+      });
+      print("Plant details loaded");
+    } catch (error) {
+      print('Error fetching plant details: $error');
     }
   }
+
+  Future<Plant> fetchPlantDetails(String plantId) async {
+    final response = await http.get(
+      Uri.parse('http://192.168.196.191:3000/plants/details/$plantId'),
+    );
+    if (response.statusCode == 200) {
+      final dynamic jsonData = json.decode(response.body);
+      return Plant.fromJson(jsonData);
+    } else {
+      throw Exception('Failed to load plant details');
+    }
+  }
+
 }
+
 
 class Plant {
   final String userUsername;

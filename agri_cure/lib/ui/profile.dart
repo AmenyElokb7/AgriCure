@@ -20,8 +20,6 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-const String baseUrl = 'http://192.168.56.1:3000';
-
 class _ProfilePageState extends State<ProfilePage> {
   late Future<UserData> userDataFuture;
 
@@ -35,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
     try {
       print(globals.loggedInUsername);
       final response = await http.get(
-        Uri.parse('$baseUrl/get-logged-in-user'),
+        Uri.parse('${globals.baseUrl}/get-logged-in-user'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Cookie': 'username=${globals.loggedInUsername}',
@@ -69,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> logout() async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/logout'),
+        Uri.parse('${globals.baseUrl}/logout'),
         headers: {'Content-Type': 'application/json'},
       );
 

@@ -1,9 +1,5 @@
-import 'dart:developer';
-
-import 'package:agri_cure/constants.dart';
-import 'package:agri_cure/ui/Manage%20Planting.dart';
-import 'package:agri_cure/ui/chat.dart';
-import 'package:floating_chat_button/floating_chat_button.dart';
+import 'package:agri_cure/ui/Manage Planting.dart';
+import 'package:agri_cure/ui/NewPlants.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -63,10 +59,16 @@ class _FarmManagementState extends State<FarmManagement> {
           backgroundColor: Color.fromRGBO(87, 130, 89, 1),
         ),
       ),
-      body: Stack(
+      body: Column(
         children: <Widget>[
           Expanded(
             child: Container(
+              // decoration: BoxDecoration(
+              //   image: DecorationImage(
+              //     image: AssetImage('assets/images/background.png'),
+              //     fit: BoxFit.cover,
+              //   ),
+              // ),
               child: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
@@ -134,7 +136,7 @@ class _FarmManagementState extends State<FarmManagement> {
                                   height: 50,
                                 ),
                                 Text(
-                                  "$temperature°C",
+                                  temperature != null ? "$temperature°C" : "",
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.black,
@@ -199,6 +201,53 @@ class _FarmManagementState extends State<FarmManagement> {
                       ],
                     ),
                     SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 350,
+                          height: 100,
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8.0,
+                                horizontal: 12.0,
+                              ),
+                              child: Row(
+                                children: <Widget>[
+                                  Image.asset(
+                                    'assets/images/news.png',
+                                    width: 50,
+                                    height: 50,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  NewsPlants()),
+                                        );
+                                      },
+                                      child: Text(
+                                        "View News ",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -206,9 +255,6 @@ class _FarmManagementState extends State<FarmManagement> {
           ),
         ],
       ),
-      
-
-
     );
   }
 }
